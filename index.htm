@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLS Daily</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-height:100vh}
+.topbar{background:#0d1428;border-bottom:1px solid #1e2a45;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'DM Serif Display',serif;font-size:20px;color:#4fc3f7;letter-spacing:0.5px}
+.logo span{color:#e8eaf0;font-size:13px;font-family:'DM Sans',sans-serif;margin-left:8px;opacity:0.6}
+.nav-links{display:flex;gap:16px;align-items:center}
+.nav-links a{color:#94a3b8;font-size:13px;text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:#4fc3f7}
+.hero{background:linear-gradient(135deg,#0d1428 0%,#0f2044 100%);padding:40px 20px;text-align:center;border-bottom:1px solid #1e2a45}
+.hero h1{font-family:'DM Serif Display',serif;font-size:32px;color:#fff;margin-bottom:8px}
+.hero p{font-size:14px;color:#94a3b8;max-width:480px;margin:0 auto 20px;line-height:1.6}
+.dept-bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.dept-btn{background:transparent;border:1px solid #1e2a45;border-radius:999px;padding:5px 14px;font-size:12px;color:#94a3b8;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.dept-btn.active,.dept-btn:hover{background:#4fc3f7;border-color:#4fc3f7;color:#0a0f1e}
+.main{max-width:720px;margin:0 auto;padding:24px 16px}
+.section-title{font-size:12px;color:#4fc3f7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;font-weight:500}
+.case-card{background:#0d1428;border:1px solid #1e2a45;border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color 0.2s}
+.case-card:hover{border-color:#2a3f6f}
+.case-head{padding:16px 20px;border-bottom:1px solid #1e2a45}
+.case-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.dept-tag{font-size:11px;padding:2px 10px;border-radius:999px;font-weight:500}
+.dept-Hematology{background:#1a2f5e;color:#60a5fa}
+.dept-Microbiology{background:#1a3a2a;color:#4ade80}
+.dept-Chemistry{background:#2d1f00;color:#fbbf24}
+.dept-Histology{background:#2d1a2a;color:#e879f9}
+.dept-BloodBank{background:#2d1a1a;color:#f87171}
+.dept-Immunology{background:#1a2d2d;color:#2dd4bf}
+.dept-Urinalysis{background:#1f2d1a;color:#a3e635}
+.case-time{font-size:11px;color:#475569}
+.case-title{font-size:17px;font-weight:500;color:#e2e8f0;margin-bottom:6px;font-family:'DM Serif Display',serif}
+.case-history{font-size:13px;color:#94a3b8;line-height:1.6}
+.case-results{background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:12px 16px;margin:12px 20px;font-size:13px;color:#cbd5e1;line-height:1.8;font-family:monospace;white-space:pre-wrap}
+.case-body{padding:12px 20px 16px}
+.vote-label{font-size:12px;color:#64748b;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em}
+.options{display:flex;flex-direction:column;gap:6px}
+.opt-btn{background:#0f1e38;border:1px solid #1e2a45;border-radius:8px;padding:10px 14px;font-size:13px;color:#cbd5e1;cursor:pointer;text-align:left;transition:all 0.2s;font-family:'DM Sans',sans-serif;display:flex;justify-content:space-between;align-items:center}
+.opt-btn:hover{border-color:#4fc3f7;color:#fff}
+.opt-btn.voted{border-color:#4fc3f7;background:#0d2040;color:#4fc3f7}
+.opt-btn.correct{border-color:#4ade80;background:#0d2a1a;color:#4ade80}
+.opt-btn.wrong{border-color:#f87171;background:#2a0d0d;color:#f87171;opacity:0.7}
+.vote-bar{height:4px;background:#1e2a45;border-radius:2px;margin-top:6px;overflow:hidden}
+.vote-fill{height:100%;background:#4fc3f7;border-radius:2px;transition:width 0.5s}
+.vote-count{font-size:11px;color:#475569;margin-top:3px}
+.revealed-badge{display:inline-flex;align-items:center;gap:6px;background:#0d2a1a;border:1px solid #4ade80;border-radius:8px;padding:8px 14px;font-size:13px;color:#4ade80;margin-bottom:10px}
+.blog-link{display:inline-flex;align-items:center;gap:6px;color:#4fc3f7;font-size:13px;text-decoration:none;margin-top:10px}
+.blog-link:hover{text-decoration:underline}
+.reveal-btn{background:transparent;border:1px solid #4fc3f7;border-radius:8px;padding:8px 16px;font-size:12px;color:#4fc3f7;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px}
+.reveal-btn:hover{background:#4fc3f7;color:#0a0f1e}
+.empty{text-align:center;padding:60px 20px;color:#475569}
+.empty div{font-size:36px;margin-bottom:12px}
+.fab{position:fixed;bottom:24px;right:24px;background:#4fc3f7;color:#0a0f1e;border:none;border-radius:999px;padding:14px 22px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 20px rgba(79,195,247,0.3);z-index:200}
+.fab:hover{background:#38b2e8}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:300;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:#0d1428;border:1px solid #1e2a45;border-radius:16px;padding:24px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.modal h2{font-family:'DM Serif Display',serif;font-size:20px;color:#e2e8f0;margin-bottom:20px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:#64748b;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
+.field input,.field select,.field textarea{width:100%;background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:'DM Sans',sans-serif;outline:none}
+.field input:focus,.field textarea:focus{border-color:#4fc3f7}
+.field select{cursor:pointer}
+.field select option{background:#0d1428}
+.opt-fields{display:flex;flex-direction:column;gap:6px}
+.opt-input{display:flex;gap:8px;align-items:center}
+.opt-input input{flex:1;background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:8px 12px;font-size:13px;color:#e2e8f0;font-family:'DM Sans',sans-serif;outline:none}
+.opt-input span{font-size:12px;color:#475569;min-width:20px}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.btn-cancel{background:transparent;border:1px solid #1e2a45;border-radius:8px;padding:10px 18px;font-size:13px;color:#94a3b8;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-submit{background:#4fc3f7;border:none;border-radius:8px;padding:10px 22px;font-size:13px;color:#0a0f1e;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-submit:disabled{opacity:0.5;cursor:default}
+.pin-field{margin-bottom:14px}
+.pin-note{font-size:11px;color:#475569;margin-top:4px}
+.footer{text-align:center;padding:40px 20px;border-top:1px solid #1e2a45;margin-top:40px}
+.footer a{color:#4fc3f7;text-decoration:none;font-size:13px;margin:0 10px}
+.footer p{font-size:12px;color:#475569;margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">MLS Daily <span>by Vincent Manu</span></div>
+  <div class="nav-links">
+    <a href="https://vincentakwas.github.io/" target="_blank">Website</a>
+    <a href="https://www.linkedin.com/in/vincent-manu-b66174263" target="_blank">LinkedIn</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>MLS Daily</h1>
+  <p>Real anonymized lab cases for medical laboratory scientists and students. Vote, diagnose, and learn every day.</p>
+  <div class="dept-bar">
+    <button class="dept-btn active" onclick="filterDept('All',event)">All</button>
+    <button class="dept-btn" onclick="filterDept('Hematology',event)">Hematology</button>
+    <button class="dept-btn" onclick="filterDept('Microbiology',event)">Microbiology</button>
+    <button class="dept-btn" onclick="filterDept('Chemistry',event)">Chemistry</button>
+    <button class="dept-btn" onclick="filterDept('Histology',event)">Histology</button>
+    <button class="dept-btn" onclick="filterDept('BloodBank',event)">Blood Bank</button>
+    <button class="dept-btn" onclick="filterDept('Immunology',event)">Immunology</button>
+    <button class="dept-btn" onclick="filterDept('Urinalysis',event)">Urinalysis</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="section-title">Today's Cases</div>
+  <div id="caseList"><div class="empty"><div>&#128300;</div><p>Loading cases...</p></div></div>
+</div>
+
+<button class="fab" onclick="openModal()">+ Post a Case</button>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2>Post a Lab Case</h2>
+    <div class="field">
+      <label>Department</label>
+      <select id="dept">
+        <option value="Hematology">Hematology</option>
+        <option value="Microbiology">Microbiology</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Histology">Histology</option>
+        <option value="BloodBank">Blood Bank</option>
+        <option value="Immunology">Immunology</option>
+        <option value="Urinalysis">Urinalysis</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Case Title</label>
+      <input type="text" id="caseTitle" placeholder="e.g. 45-year-old with fatigue and pallor">
+    </div>
+    <div class="field">
+      <label>Clinical History</label>
+      <textarea id="history" placeholder="Brief anonymous patient history..."></textarea>
+    </div>
+    <div class="field">
+      <label>Lab Results</label>
+      <textarea id="results" placeholder="e.g. WBC: 2.1 x10⁹/L&#10;RBC: 1.8 x10¹²/L&#10;Hb: 6.2 g/dL&#10;MCV: 108 fL"></textarea>
+    </div>
+    <div class="field">
+      <label>Answer Options (4 choices)</label>
+      <div class="opt-fields">
+        <div class="opt-input"><span>A</span><input type="text" id="opt0" placeholder="Option A"></div>
+        <div class="opt-input"><span>B</span><input type="text" id="opt1" placeholder="Option B"></div>
+        <div class="opt-input"><span>C</span><input type="text" id="opt2" placeholder="Option C"></div>
+        <div class="opt-input"><span>D</span><input type="text" id="opt3" placeholder="Option D"></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Correct Answer</label>
+      <select id="correctAnswer">
+        <option value="0">A</option>
+        <option value="1">B</option>
+        <option value="2">C</option>
+        <option value="3">D</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Blog Post URL (optional)</label>
+      <input type="text" id="blogUrl" placeholder="https://your-blog.com/case-breakdown">
+    </div>
+    <div class="pin-field">
+      <label style="font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">Admin PIN</label>
+      <input type="password" id="adminPin" placeholder="Enter your admin PIN" style="width:100%;background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:'DM Sans',sans-serif;outline:none;margin-top:5px">
+      <div class="pin-note">Only you can post cases using your PIN set in Code.gs</div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-submit" id="submitBtn" onclick="submitCase()">Post Case</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div>
+    <a href="https://vincentakwas.github.io/" target="_blank">Website</a>
+    <a href="https://www.linkedin.com/in/vincent-manu-b66174263" target="_blank">LinkedIn</a>
+  </div>
+  <p>MLS Daily — built for medical laboratory scientists worldwide</p>
+</div>
+
+<script>
+var GAS = "https://script.google.com/macros/s/AKfycbyK_ZNEi4Q9GeTU67u4IL2tkjJnHwnWmIoIkLktjBnWX3TIRUcgwReCCjjp0H7n5gDW/exec";
+var allCases = [];
+var currentDept = "All";
+var votedCases = {};
+try { votedCases = JSON.parse(localStorage.getItem('mls_voted') || '{}'); } catch(e){}
+
+function load() {
+  fetch(GAS + "?action=getCases")
+    .then(function(r){ return r.json(); })
+    .then(function(cases) {
+      allCases = cases;
+      render();
+    })
+    .catch(function(){
+      document.getElementById('caseList').innerHTML = '<div class="empty"><div>&#9888;</div><p>Could not load cases.<br>Try refreshing.</p></div>';
+    });
+}
+
+function render() {
+  var list = document.getElementById('caseList');
+  var filtered = currentDept === 'All' ? allCases : allCases.filter(function(c){ return c.dept === currentDept; });
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty"><div>&#128300;</div><p>No cases yet.<br>Click <strong>+ Post a Case</strong> to add the first one!</p></div>';
+    return;
+  }
+  list.innerHTML = '';
+  filtered.forEach(function(c){ list.appendChild(buildCard(c)); });
+}
+
+function buildCard(c) {
+  var div = document.createElement('div');
+  div.className = 'case-card';
+  var d = new Date(c.timestamp);
+  var timeStr = isNaN(d) ? '' : d.toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'});
+  var deptLabel = c.dept === 'BloodBank' ? 'Blood Bank' : c.dept;
+  var myVote = votedCases[c.id];
+  var isRevealed = c.revealed;
+
+  var optionsHtml = '';
+  c.options.forEach(function(opt, i) {
+    var cls = 'opt-btn';
+    if (myVote !== undefined) {
+      if (isRevealed) {
+        if (i === parseInt(c.answer)) cls += ' correct';
+        else if (i === myVote) cls += ' wrong';
+      } else {
+        if (i === myVote) cls += ' voted';
+      }
+    }
+    optionsHtml += '<button class="'+cls+'" onclick="vote(\''+c.id+'\','+i+')">'+esc(opt)+'<span id="pct_'+c.id+'_'+i+'"></span></button>';
+    optionsHtml += '<div class="vote-bar"><div class="vote-fill" id="bar_'+c.id+'_'+i+'" style="width:0%"></div></div>';
+    optionsHtml += '<div class="vote-count" id="cnt_'+c.id+'_'+i+'"></div>';
+  });
+
+  var revealedSection = '';
+  if (isRevealed) {
+    revealedSection =
+      '<div class="revealed-badge">&#10003; Answer: '+esc(c.options[parseInt(c.answer)])+'</div>';
+    if (c.blogUrl) {
+      revealedSection += '<br><a class="blog-link" href="'+esc(c.blogUrl)+'" target="_blank">&#128214; Read full breakdown</a>';
+    }
+    revealedSection += '<br><a class="blog-link" href="https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(c.blogUrl || 'https://vincentakwas.github.io/mls-daily')+'" target="_blank">&#128101; Share on LinkedIn</a>';
+  } else {
+    revealedSection = '<button class="reveal-btn" onclick="reveal(\''+c.id+'\')">&#128274; Reveal Answer</button>';
+  }
+
+  div.innerHTML =
+    '<div class="case-head">'+
+      '<div class="case-meta">'+
+        '<span class="dept-tag dept-'+c.dept+'">'+deptLabel+'</span>'+
+        '<span class="case-time">'+timeStr+'</span>'+
+      '</div>'+
+      '<div class="case-title">'+esc(c.title)+'</div>'+
+      '<div class="case-history">'+esc(c.history)+'</div>'+
+    '</div>'+
+    '<pre class="case-results">'+esc(c.results)+'</pre>'+
+    '<div class="case-body">'+
+      '<div class="vote-label">What is the most likely diagnosis?</div>'+
+      '<div class="options">'+optionsHtml+'</div>'+
+      '<div style="margin-top:12px">'+revealedSection+'</div>'+
+    '</div>';
+
+  if (myVote !== undefined || isRevealed) loadVotes(c.id, c.options.length);
+  return div;
+}
+
+function esc(t) {
+  if (!t) return '';
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function vote(caseId, choice) {
+  if (votedCases[caseId] !== undefined) return;
+  votedCases[caseId] = choice;
+  try { localStorage.setItem('mls_voted', JSON.stringify(votedCases)); } catch(e){}
+  fetch(GAS, {
+    method: 'POST',
+    headers: {'Content-Type':'text/plain'},
+    body: JSON.stringify({ action: 'vote', caseId: caseId, choice: choice })
+  }).then(function(){ load(); });
+}
+
+function loadVotes(caseId, numOpts) {
+  fetch(GAS + "?action=getVotes&caseId=" + caseId)
+    .then(function(r){ return r.json(); })
+    .then(function(counts) {
+      var total = 0;
+      for (var k in counts) total += parseInt(counts[k]);
+      for (var i = 0; i < numOpts; i++) {
+        var n = parseInt(counts[i]) || 0;
+        var pct = total > 0 ? Math.round(n / total * 100) : 0;
+        var barEl = document.getElementById('bar_'+caseId+'_'+i);
+        var cntEl = document.getElementById('cnt_'+caseId+'_'+i);
+        var pctEl = document.getElementById('pct_'+caseId+'_'+i);
+        if (barEl) barEl.style.width = pct + '%';
+        if (cntEl) cntEl.textContent = n + ' vote'+(n!==1?'s':'')+' ('+pct+'%)';
+        if (pctEl) pctEl.textContent = '  '+pct+'%';
+      }
+    });
+}
+
+function reveal(caseId) {
+  var pin = prompt('Enter your admin PIN to reveal the answer:');
+  if (!pin) return;
+  fetch(GAS, {
+    method: 'POST',
+    headers: {'Content-Type':'text/plain'},
+    body: JSON.stringify({ action: 'reveal', caseId: caseId, pin: pin })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if (data.status === 'ok') load();
+    else alert('Incorrect PIN or error. Try again.');
+  });
+}
+
+function filterDept(dept, e) {
+  currentDept = dept;
+  document.querySelectorAll('.dept-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (e && e.target) e.target.classList.add('active');
+  render();
+}
+
+function openModal(){ document.getElementById('modalBg').classList.add('open'); }
+function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
+
+function submitCase() {
+  var pin    = document.getElementById('adminPin').value.trim();
+  var title  = document.getElementById('caseTitle').value.trim();
+  var hist   = document.getElementById('history').value.trim();
+  var res    = document.getElementById('results').value.trim();
+  var dept   = document.getElementById('dept').value;
+  var blog   = document.getElementById('blogUrl').value.trim();
+  var answer = document.getElementById('correctAnswer').value;
+  var opts   = [
+    document.getElementById('opt0').value.trim(),
+    document.getElementById('opt1').value.trim(),
+    document.getElementById('opt2').value.trim(),
+    document.getElementById('opt3').value.trim()
+  ];
+  if (!title || !hist || !res || opts.some(function(o){ return !o; })) {
+    alert('Please fill in all fields except Blog URL.');
+    return;
+  }
+  if (!pin) { alert('Please enter your admin PIN.'); return; }
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Posting...';
+  fetch(GAS, {
+    method: 'POST',
+    headers: {'Content-Type':'text/plain'},
+    body: JSON.stringify({ action:'addCase', title:title, dept:dept, history:hist, results:res, options:opts, answer:answer, blogUrl:blog, pin:pin })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    btn.disabled = false;
+    btn.textContent = 'Post Case';
+    if (data.status === 'ok') {
+      closeModal();
+      document.getElementById('caseTitle').value='';
+      document.getElementById('history').value='';
+      document.getElementById('results').value='';
+      document.getElementById('opt0').value='';
+      document.getElementById('opt1').value='';
+      document.getElementById('opt2').value='';
+      document.getElementById('opt3').value='';
+      document.getElementById('blogUrl').value='';
+      document.getElementById('adminPin').value='';
+      load();
+    } else {
+      alert('Error: '+(data.message||'Check your PIN and try again.'));
+    }
+  })
+  .catch(function(){
+    btn.disabled = false;
+    btn.textContent = 'Post Case';
+    alert('Failed to post. Try again.');
+  });
+}
+
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>
