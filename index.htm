@@ -9,10 +9,10 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-height:100vh}
 .topbar{background:#0d1428;border-bottom:1px solid #1e2a45;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-family:'DM Serif Display',serif;font-size:20px;color:#4fc3f7;letter-spacing:0.5px}
+.logo{font-family:'DM Serif Display',serif;font-size:20px;color:#4fc3f7}
 .logo span{color:#e8eaf0;font-size:13px;font-family:'DM Sans',sans-serif;margin-left:8px;opacity:0.6}
 .nav-links{display:flex;gap:16px;align-items:center}
-.nav-links a{color:#94a3b8;font-size:13px;text-decoration:none;transition:color 0.2s}
+.nav-links a{color:#94a3b8;font-size:13px;text-decoration:none}
 .nav-links a:hover{color:#4fc3f7}
 .hero{background:linear-gradient(135deg,#0d1428 0%,#0f2044 100%);padding:40px 20px;text-align:center;border-bottom:1px solid #1e2a45}
 .hero h1{font-family:'DM Serif Display',serif;font-size:32px;color:#fff;margin-bottom:8px}
@@ -20,12 +20,16 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-heigh
 .dept-bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
 .dept-btn{background:transparent;border:1px solid #1e2a45;border-radius:999px;padding:5px 14px;font-size:12px;color:#94a3b8;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .dept-btn.active,.dept-btn:hover{background:#4fc3f7;border-color:#4fc3f7;color:#0a0f1e}
+.tabs{display:flex;gap:0;background:#0d1428;border-bottom:1px solid #1e2a45;max-width:720px;margin:0 auto}
+.tab{padding:12px 24px;font-size:13px;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.tab.active{color:#4fc3f7;border-bottom-color:#4fc3f7}
+.tab:hover{color:#94a3b8}
 .main{max-width:720px;margin:0 auto;padding:24px 16px}
 .section-title{font-size:12px;color:#4fc3f7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;font-weight:500}
 .case-card{background:#0d1428;border:1px solid #1e2a45;border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color 0.2s}
 .case-card:hover{border-color:#2a3f6f}
 .case-head{padding:16px 20px;border-bottom:1px solid #1e2a45}
-.case-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.case-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .dept-tag{font-size:11px;padding:2px 10px;border-radius:999px;font-weight:500}
 .dept-Hematology{background:#1a2f5e;color:#60a5fa}
 .dept-Microbiology{background:#1a3a2a;color:#4ade80}
@@ -35,13 +39,14 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-heigh
 .dept-Immunology{background:#1a2d2d;color:#2dd4bf}
 .dept-Urinalysis{background:#1f2d1a;color:#a3e635}
 .case-time{font-size:11px;color:#475569}
+.scheduled-badge{background:#1a2d1a;color:#4ade80;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid #4ade80}
 .case-title{font-size:17px;font-weight:500;color:#e2e8f0;margin-bottom:6px;font-family:'DM Serif Display',serif}
 .case-history{font-size:13px;color:#94a3b8;line-height:1.6}
 .case-results{background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:12px 16px;margin:12px 20px;font-size:13px;color:#cbd5e1;line-height:1.8;font-family:monospace;white-space:pre-wrap}
 .case-body{padding:12px 20px 16px}
 .vote-label{font-size:12px;color:#64748b;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em}
 .options{display:flex;flex-direction:column;gap:6px}
-.opt-btn{background:#0f1e38;border:1px solid #1e2a45;border-radius:8px;padding:10px 14px;font-size:13px;color:#cbd5e1;cursor:pointer;text-align:left;transition:all 0.2s;font-family:'DM Sans',sans-serif;display:flex;justify-content:space-between;align-items:center}
+.opt-btn{background:#0f1e38;border:1px solid #1e2a45;border-radius:8px;padding:10px 14px;font-size:13px;color:#cbd5e1;cursor:pointer;text-align:left;transition:all 0.2s;font-family:'DM Sans',sans-serif;display:flex;justify-content:space-between;align-items:center;width:100%}
 .opt-btn:hover{border-color:#4fc3f7;color:#fff}
 .opt-btn.voted{border-color:#4fc3f7;background:#0d2040;color:#4fc3f7}
 .opt-btn.correct{border-color:#4ade80;background:#0d2a1a;color:#4ade80}
@@ -50,37 +55,51 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-heigh
 .vote-fill{height:100%;background:#4fc3f7;border-radius:2px;transition:width 0.5s}
 .vote-count{font-size:11px;color:#475569;margin-top:3px}
 .revealed-badge{display:inline-flex;align-items:center;gap:6px;background:#0d2a1a;border:1px solid #4ade80;border-radius:8px;padding:8px 14px;font-size:13px;color:#4ade80;margin-bottom:10px}
-.blog-link{display:inline-flex;align-items:center;gap:6px;color:#4fc3f7;font-size:13px;text-decoration:none;margin-top:10px}
+.blog-link{display:inline-flex;align-items:center;gap:6px;color:#4fc3f7;font-size:13px;text-decoration:none;margin-top:10px;margin-right:12px}
 .blog-link:hover{text-decoration:underline}
 .reveal-btn{background:transparent;border:1px solid #4fc3f7;border-radius:8px;padding:8px 16px;font-size:12px;color:#4fc3f7;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px}
 .reveal-btn:hover{background:#4fc3f7;color:#0a0f1e}
+.delete-btn{background:transparent;border:1px solid #f87171;border-radius:8px;padding:8px 16px;font-size:12px;color:#f87171;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;margin-left:8px}
+.delete-btn:hover{background:#f87171;color:#0a0f1e}
 .empty{text-align:center;padding:60px 20px;color:#475569}
 .empty div{font-size:36px;margin-bottom:12px}
-.fab{position:fixed;bottom:24px;right:24px;background:#4fc3f7;color:#0a0f1e;border:none;border-radius:999px;padding:14px 22px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 20px rgba(79,195,247,0.3);z-index:200}
+.fab-group{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;align-items:flex-end;z-index:200}
+.fab{background:#4fc3f7;color:#0a0f1e;border:none;border-radius:999px;padding:14px 22px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 20px rgba(79,195,247,0.3)}
 .fab:hover{background:#38b2e8}
+.fab.schedule{background:#5f27cd;color:white;box-shadow:0 4px 20px rgba(95,39,205,0.3)}
+.fab.schedule:hover{background:#4a1fa8}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:300;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex}
 .modal{background:#0d1428;border:1px solid #1e2a45;border-radius:16px;padding:24px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
-.modal h2{font-family:'DM Serif Display',serif;font-size:20px;color:#e2e8f0;margin-bottom:20px}
+.modal h2{font-family:'DM Serif Display',serif;font-size:20px;color:#e2e8f0;margin-bottom:6px}
+.modal-sub{font-size:12px;color:#64748b;margin-bottom:20px}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:12px;color:#64748b;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
 .field input,.field select,.field textarea{width:100%;background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:'DM Sans',sans-serif;outline:none}
 .field input:focus,.field textarea:focus{border-color:#4fc3f7}
 .field select{cursor:pointer}
 .field select option{background:#0d1428}
+.field textarea{min-height:80px;resize:vertical}
 .opt-fields{display:flex;flex-direction:column;gap:6px}
 .opt-input{display:flex;gap:8px;align-items:center}
 .opt-input input{flex:1;background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:8px 12px;font-size:13px;color:#e2e8f0;font-family:'DM Sans',sans-serif;outline:none}
 .opt-input span{font-size:12px;color:#475569;min-width:20px}
-.modal-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
 .btn-cancel{background:transparent;border:1px solid #1e2a45;border-radius:8px;padding:10px 18px;font-size:13px;color:#94a3b8;cursor:pointer;font-family:'DM Sans',sans-serif}
 .btn-submit{background:#4fc3f7;border:none;border-radius:8px;padding:10px 22px;font-size:13px;color:#0a0f1e;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-submit.purple{background:#5f27cd;color:white}
 .btn-submit:disabled{opacity:0.5;cursor:default}
-.pin-field{margin-bottom:14px}
+.pin-field input{width:100%;background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:'DM Sans',sans-serif;outline:none;margin-top:5px}
 .pin-note{font-size:11px;color:#475569;margin-top:4px}
+.schedule-card{background:#0d1428;border:1px solid #2a1f5e;border-radius:12px;margin-bottom:12px;padding:16px 20px}
+.schedule-time{font-size:12px;color:#5f27cd;margin-bottom:6px;font-weight:500}
+.schedule-title{font-size:15px;font-weight:500;color:#e2e8f0;margin-bottom:4px;font-family:'DM Serif Display',serif}
+.schedule-dept{font-size:12px;color:#64748b}
 .footer{text-align:center;padding:40px 20px;border-top:1px solid #1e2a45;margin-top:40px}
 .footer a{color:#4fc3f7;text-decoration:none;font-size:13px;margin:0 10px}
 .footer p{font-size:12px;color:#475569;margin-top:8px}
+.page{display:none}
+.page.active{display:block}
 </style>
 </head>
 <body>
@@ -108,18 +127,36 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-heigh
   </div>
 </div>
 
-<div class="main">
-  <div class="section-title">Today's Cases</div>
-  <div id="caseList"><div class="empty"><div>&#128300;</div><p>Loading cases...</p></div></div>
+<div style="background:#0d1428;border-bottom:1px solid #1e2a45;">
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('live',this)">Live Cases</div>
+    <div class="tab" onclick="switchTab('scheduled',this)">Scheduled &#128197;</div>
+  </div>
 </div>
 
-<button class="fab" onclick="openModal()">+ Post a Case</button>
+<div class="main">
+  <div id="livePage" class="page active">
+    <div class="section-title">Today's Cases</div>
+    <div id="caseList"><div class="empty"><div>&#128300;</div><p>Loading cases...</p></div></div>
+  </div>
 
-<div class="modal-bg" id="modalBg">
+  <div id="scheduledPage" class="page">
+    <div class="section-title">Scheduled Cases</div>
+    <div id="scheduledList"><div class="empty"><div>&#128197;</div><p>Loading scheduled cases...</p></div></div>
+  </div>
+</div>
+
+<div class="fab-group">
+  <button class="fab schedule" onclick="openModal('scheduleModal')">&#128197; Schedule</button>
+  <button class="fab" onclick="openModal('postModal')">+ Post Now</button>
+</div>
+
+<!-- Post Now Modal -->
+<div class="modal-bg" id="postModal">
   <div class="modal">
-    <h2>Post a Lab Case</h2>
-    <div class="field">
-      <label>Department</label>
+    <h2>Post a Case Now</h2>
+    <div class="modal-sub">Case goes live immediately</div>
+    <div class="field"><label>Department</label>
       <select id="dept">
         <option value="Hematology">Hematology</option>
         <option value="Microbiology">Microbiology</option>
@@ -130,20 +167,10 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-heigh
         <option value="Urinalysis">Urinalysis</option>
       </select>
     </div>
-    <div class="field">
-      <label>Case Title</label>
-      <input type="text" id="caseTitle" placeholder="e.g. 45-year-old with fatigue and pallor">
-    </div>
-    <div class="field">
-      <label>Clinical History</label>
-      <textarea id="history" placeholder="Brief anonymous patient history..."></textarea>
-    </div>
-    <div class="field">
-      <label>Lab Results</label>
-      <textarea id="results" placeholder="e.g. WBC: 2.1 x10⁹/L&#10;RBC: 1.8 x10¹²/L&#10;Hb: 6.2 g/dL&#10;MCV: 108 fL"></textarea>
-    </div>
-    <div class="field">
-      <label>Answer Options (4 choices)</label>
+    <div class="field"><label>Case Title</label><input type="text" id="caseTitle" placeholder="e.g. 45-year-old with fatigue and pallor"></div>
+    <div class="field"><label>Clinical History</label><textarea id="history" placeholder="Brief anonymous patient history..."></textarea></div>
+    <div class="field"><label>Lab Results</label><textarea id="results" placeholder="WBC: 2.1 x10⁹/L&#10;Hb: 6.2 g/dL"></textarea></div>
+    <div class="field"><label>Answer Options</label>
       <div class="opt-fields">
         <div class="opt-input"><span>A</span><input type="text" id="opt0" placeholder="Option A"></div>
         <div class="opt-input"><span>B</span><input type="text" id="opt1" placeholder="Option B"></div>
@@ -151,27 +178,66 @@ body{font-family:'DM Sans',sans-serif;background:#0a0f1e;color:#e8eaf0;min-heigh
         <div class="opt-input"><span>D</span><input type="text" id="opt3" placeholder="Option D"></div>
       </div>
     </div>
-    <div class="field">
-      <label>Correct Answer</label>
+    <div class="field"><label>Correct Answer</label>
       <select id="correctAnswer">
-        <option value="0">A</option>
-        <option value="1">B</option>
-        <option value="2">C</option>
-        <option value="3">D</option>
+        <option value="0">A</option><option value="1">B</option>
+        <option value="2">C</option><option value="3">D</option>
       </select>
     </div>
-    <div class="field">
-      <label>Blog Post URL (optional)</label>
-      <input type="text" id="blogUrl" placeholder="https://your-blog.com/case-breakdown">
-    </div>
-    <div class="pin-field">
-      <label style="font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">Admin PIN</label>
-      <input type="password" id="adminPin" placeholder="Enter your admin PIN" style="width:100%;background:#080d1a;border:1px solid #1e2a45;border-radius:8px;padding:10px 12px;font-size:13px;color:#e2e8f0;font-family:'DM Sans',sans-serif;outline:none;margin-top:5px">
-      <div class="pin-note">Only you can post cases using your PIN set in Code.gs</div>
+    <div class="field"><label>Blog Post URL (optional)</label><input type="text" id="blogUrl" placeholder="https://your-blog.com/case-breakdown"></div>
+    <div class="pin-field field"><label>Admin PIN</label>
+      <input type="password" id="adminPin" placeholder="Enter your admin PIN">
+      <div class="pin-note">Only you can post cases</div>
     </div>
     <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-submit" id="submitBtn" onclick="submitCase()">Post Case</button>
+      <button class="btn-cancel" onclick="closeModal('postModal')">Cancel</button>
+      <button class="btn-submit" id="submitBtn" onclick="submitCase()">Post Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule Modal -->
+<div class="modal-bg" id="scheduleModal">
+  <div class="modal">
+    <h2>Schedule a Case</h2>
+    <div class="modal-sub">Choose a future date and time — it posts automatically</div>
+    <div class="field"><label>Department</label>
+      <select id="sDept">
+        <option value="Hematology">Hematology</option>
+        <option value="Microbiology">Microbiology</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Histology">Histology</option>
+        <option value="BloodBank">Blood Bank</option>
+        <option value="Immunology">Immunology</option>
+        <option value="Urinalysis">Urinalysis</option>
+      </select>
+    </div>
+    <div class="field"><label>Publish Date and Time</label><input type="datetime-local" id="scheduleTime"></div>
+    <div class="field"><label>Case Title</label><input type="text" id="sTitle" placeholder="e.g. 45-year-old with fatigue and pallor"></div>
+    <div class="field"><label>Clinical History</label><textarea id="sHistory" placeholder="Brief anonymous patient history..."></textarea></div>
+    <div class="field"><label>Lab Results</label><textarea id="sResults" placeholder="WBC: 2.1 x10⁹/L&#10;Hb: 6.2 g/dL"></textarea></div>
+    <div class="field"><label>Answer Options</label>
+      <div class="opt-fields">
+        <div class="opt-input"><span>A</span><input type="text" id="sOpt0" placeholder="Option A"></div>
+        <div class="opt-input"><span>B</span><input type="text" id="sOpt1" placeholder="Option B"></div>
+        <div class="opt-input"><span>C</span><input type="text" id="sOpt2" placeholder="Option C"></div>
+        <div class="opt-input"><span>D</span><input type="text" id="sOpt3" placeholder="Option D"></div>
+      </div>
+    </div>
+    <div class="field"><label>Correct Answer</label>
+      <select id="sCorrectAnswer">
+        <option value="0">A</option><option value="1">B</option>
+        <option value="2">C</option><option value="3">D</option>
+      </select>
+    </div>
+    <div class="field"><label>Blog Post URL (optional)</label><input type="text" id="sBlogUrl" placeholder="https://your-blog.com/case-breakdown"></div>
+    <div class="pin-field field"><label>Admin PIN</label>
+      <input type="password" id="sAdminPin" placeholder="Enter your admin PIN">
+      <div class="pin-note">Only you can schedule cases</div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('scheduleModal')">Cancel</button>
+      <button class="btn-submit purple" id="scheduleBtn" onclick="submitScheduled()">Schedule Case</button>
     </div>
   </div>
 </div>
@@ -191,6 +257,20 @@ var currentDept = "All";
 var votedCases = {};
 try { votedCases = JSON.parse(localStorage.getItem('mls_voted') || '{}'); } catch(e){}
 
+// ---- Tab Switching ----
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  if (tab === 'live') {
+    document.getElementById('livePage').classList.add('active');
+  } else {
+    document.getElementById('scheduledPage').classList.add('active');
+    loadScheduled();
+  }
+}
+
+// ---- Load Live Cases ----
 function load() {
   fetch(GAS + "?action=getCases")
     .then(function(r){ return r.json(); })
@@ -207,7 +287,7 @@ function render() {
   var list = document.getElementById('caseList');
   var filtered = currentDept === 'All' ? allCases : allCases.filter(function(c){ return c.dept === currentDept; });
   if (!filtered.length) {
-    list.innerHTML = '<div class="empty"><div>&#128300;</div><p>No cases yet.<br>Click <strong>+ Post a Case</strong> to add the first one!</p></div>';
+    list.innerHTML = '<div class="empty"><div>&#128300;</div><p>No cases yet.<br>Click <strong>+ Post Now</strong> to add the first one!</p></div>';
     return;
   }
   list.innerHTML = '';
@@ -241,12 +321,9 @@ function buildCard(c) {
 
   var revealedSection = '';
   if (isRevealed) {
-    revealedSection =
-      '<div class="revealed-badge">&#10003; Answer: '+esc(c.options[parseInt(c.answer)])+'</div>';
-    if (c.blogUrl) {
-      revealedSection += '<br><a class="blog-link" href="'+esc(c.blogUrl)+'" target="_blank">&#128214; Read full breakdown</a>';
-    }
-    revealedSection += '<br><a class="blog-link" href="https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(c.blogUrl || 'https://vincentakwas.github.io/mls-daily')+'" target="_blank">&#128101; Share on LinkedIn</a>';
+    revealedSection = '<div class="revealed-badge">&#10003; Answer: '+esc(c.options[parseInt(c.answer)])+'</div><br>';
+    if (c.blogUrl) revealedSection += '<a class="blog-link" href="'+esc(c.blogUrl)+'" target="_blank">&#128214; Read full breakdown</a>';
+    revealedSection += '<a class="blog-link" href="https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(c.blogUrl||'https://vincentakwas.github.io/mls-daily')+'" target="_blank">&#128101; Share on LinkedIn</a>';
   } else {
     revealedSection = '<button class="reveal-btn" onclick="reveal(\''+c.id+'\')">&#128274; Reveal Answer</button>';
   }
@@ -271,11 +348,58 @@ function buildCard(c) {
   return div;
 }
 
-function esc(t) {
-  if (!t) return '';
-  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// ---- Load Scheduled Cases ----
+function loadScheduled() {
+  var list = document.getElementById('scheduledList');
+  list.innerHTML = '<div class="empty"><div>&#128197;</div><p>Loading...</p></div>';
+  fetch(GAS + "?action=getScheduled")
+    .then(function(r){ return r.json(); })
+    .then(function(cases) {
+      if (!cases.length) {
+        list.innerHTML = '<div class="empty"><div>&#128197;</div><p>No scheduled cases.<br>Click <strong>Schedule</strong> to plan ahead!</p></div>';
+        return;
+      }
+      list.innerHTML = '';
+      cases.forEach(function(c) {
+        var card = document.createElement('div');
+        card.className = 'schedule-card';
+        var d = new Date(c.scheduledFor);
+        var timeStr = isNaN(d) ? c.scheduledFor :
+          d.toLocaleDateString([],{weekday:'long',month:'long',day:'numeric',year:'numeric'}) +
+          ' at ' + d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+        var deptLabel = c.dept === 'BloodBank' ? 'Blood Bank' : c.dept;
+        card.innerHTML =
+          '<div class="schedule-time">&#128197; Publishes: '+timeStr+'</div>'+
+          '<div class="case-meta" style="margin-bottom:6px">'+
+            '<span class="dept-tag dept-'+c.dept+'">'+deptLabel+'</span>'+
+          '</div>'+
+          '<div class="schedule-title">'+esc(c.title)+'</div>'+
+          '<div class="schedule-dept" style="margin-top:4px">'+esc(c.history.substring(0,100))+'...</div>'+
+          '<button class="delete-btn" onclick="deleteScheduled(\''+c.id+'\')">&#128465; Delete</button>';
+        list.appendChild(card);
+      });
+    })
+    .catch(function(){
+      list.innerHTML = '<div class="empty"><div>&#9888;</div><p>Could not load scheduled cases.</p></div>';
+    });
 }
 
+function deleteScheduled(id) {
+  var pin = prompt('Enter admin PIN to delete:');
+  if (!pin) return;
+  fetch(GAS, {
+    method: 'POST',
+    headers: {'Content-Type':'text/plain'},
+    body: JSON.stringify({ action: 'deleteScheduled', id: id, pin: pin })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if (data.status === 'ok') loadScheduled();
+    else alert('Wrong PIN or error.');
+  });
+}
+
+// ---- Voting ----
 function vote(caseId, choice) {
   if (votedCases[caseId] !== undefined) return;
   votedCases[caseId] = choice;
@@ -317,10 +441,11 @@ function reveal(caseId) {
   .then(function(r){ return r.json(); })
   .then(function(data){
     if (data.status === 'ok') load();
-    else alert('Incorrect PIN or error. Try again.');
+    else alert('Incorrect PIN. Try again.');
   });
 }
 
+// ---- Filter ----
 function filterDept(dept, e) {
   currentDept = dept;
   document.querySelectorAll('.dept-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -328,9 +453,11 @@ function filterDept(dept, e) {
   render();
 }
 
-function openModal(){ document.getElementById('modalBg').classList.add('open'); }
-function closeModal(){ document.getElementById('modalBg').classList.remove('open'); }
+// ---- Modals ----
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 
+// ---- Post Now ----
 function submitCase() {
   var pin    = document.getElementById('adminPin').value.trim();
   var title  = document.getElementById('caseTitle').value.trim();
@@ -346,13 +473,11 @@ function submitCase() {
     document.getElementById('opt3').value.trim()
   ];
   if (!title || !hist || !res || opts.some(function(o){ return !o; })) {
-    alert('Please fill in all fields except Blog URL.');
-    return;
+    alert('Please fill in all fields except Blog URL.'); return;
   }
   if (!pin) { alert('Please enter your admin PIN.'); return; }
   var btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Posting...';
+  btn.disabled = true; btn.textContent = 'Posting...';
   fetch(GAS, {
     method: 'POST',
     headers: {'Content-Type':'text/plain'},
@@ -360,29 +485,60 @@ function submitCase() {
   })
   .then(function(r){ return r.json(); })
   .then(function(data){
-    btn.disabled = false;
-    btn.textContent = 'Post Case';
+    btn.disabled = false; btn.textContent = 'Post Now';
     if (data.status === 'ok') {
-      closeModal();
-      document.getElementById('caseTitle').value='';
-      document.getElementById('history').value='';
-      document.getElementById('results').value='';
-      document.getElementById('opt0').value='';
-      document.getElementById('opt1').value='';
-      document.getElementById('opt2').value='';
-      document.getElementById('opt3').value='';
-      document.getElementById('blogUrl').value='';
-      document.getElementById('adminPin').value='';
+      closeModal('postModal');
+      ['caseTitle','history','results','opt0','opt1','opt2','opt3','blogUrl','adminPin'].forEach(function(id){ document.getElementById(id).value=''; });
       load();
-    } else {
-      alert('Error: '+(data.message||'Check your PIN and try again.'));
-    }
+    } else { alert('Error: '+(data.message||'Check your PIN.')); }
   })
-  .catch(function(){
-    btn.disabled = false;
-    btn.textContent = 'Post Case';
-    alert('Failed to post. Try again.');
-  });
+  .catch(function(){ btn.disabled = false; btn.textContent = 'Post Now'; alert('Failed. Try again.'); });
+}
+
+// ---- Schedule ----
+function submitScheduled() {
+  var pin    = document.getElementById('sAdminPin').value.trim();
+  var title  = document.getElementById('sTitle').value.trim();
+  var hist   = document.getElementById('sHistory').value.trim();
+  var res    = document.getElementById('sResults').value.trim();
+  var dept   = document.getElementById('sDept').value;
+  var blog   = document.getElementById('sBlogUrl').value.trim();
+  var answer = document.getElementById('sCorrectAnswer').value;
+  var sTime  = document.getElementById('scheduleTime').value;
+  var opts   = [
+    document.getElementById('sOpt0').value.trim(),
+    document.getElementById('sOpt1').value.trim(),
+    document.getElementById('sOpt2').value.trim(),
+    document.getElementById('sOpt3').value.trim()
+  ];
+  if (!title || !hist || !res || !sTime || opts.some(function(o){ return !o; })) {
+    alert('Please fill in all fields including the date and time.'); return;
+  }
+  if (!pin) { alert('Please enter your admin PIN.'); return; }
+  if (new Date(sTime) <= new Date()) { alert('Please choose a future date and time.'); return; }
+  var btn = document.getElementById('scheduleBtn');
+  btn.disabled = true; btn.textContent = 'Scheduling...';
+  fetch(GAS, {
+    method: 'POST',
+    headers: {'Content-Type':'text/plain'},
+    body: JSON.stringify({ action:'scheduleCase', title:title, dept:dept, history:hist, results:res, options:opts, answer:answer, blogUrl:blog, scheduledFor:new Date(sTime).toISOString(), pin:pin })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    btn.disabled = false; btn.textContent = 'Schedule Case';
+    if (data.status === 'ok') {
+      closeModal('scheduleModal');
+      ['sTitle','sHistory','sResults','sOpt0','sOpt1','sOpt2','sOpt3','sBlogUrl','sAdminPin'].forEach(function(id){ document.getElementById(id).value=''; });
+      document.getElementById('scheduleTime').value='';
+      alert('Case scheduled successfully!');
+    } else { alert('Error: '+(data.message||'Check your PIN.')); }
+  })
+  .catch(function(){ btn.disabled = false; btn.textContent = 'Schedule Case'; alert('Failed. Try again.'); });
+}
+
+function esc(t) {
+  if (!t) return '';
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 load();
